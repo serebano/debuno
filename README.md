@@ -1,15 +1,16 @@
 # debuno
 
-To install dependencies:
+Deno module resolution for Bun and Node
+
+Install
 
 ```bash
-bun install
+bun add debuno
 ```
 
-To run:
+Use
 
 ```bash
-bun run index.ts
+bun --preload debuno ./index.ts
+node --import debuno ./index.ts
 ```
-
-This project was created using `bun init` in bun v1.1.33. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
