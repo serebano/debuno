@@ -1,5 +1,8 @@
+import process from "node:process";
 import runtime from "./runtime.ts";
 import pkg from "./package.json" with { type: "json" };
+
+export * from "./runtime.ts";
 
 export function info() {
     const { name, version } = pkg;
@@ -11,7 +14,7 @@ export function info() {
         url,
         name,
         version,
-        runtime,
+        runtime
     };
 }
 
