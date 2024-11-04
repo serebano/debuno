@@ -1,6 +1,6 @@
 {
   "name": "debuno",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Deno module resolution for Bun and Node",
   "module": "index.ts",
   "type": "module",
