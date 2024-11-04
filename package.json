@@ -1,7 +1,12 @@
 {
   "name": "debuno",
-  "version": "0.0.9",
-  "description": "Deno module resolution for Bun and Node",
+  "version": "0.0.10",
+  "description": "Deno module resolution for Bun & Node",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/serebano/debuno"
+  },
+  "author": "Sergiu Toderascu",
   "module": "index.ts",
   "type": "module",
   "exports": {
