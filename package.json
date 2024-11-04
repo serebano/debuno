@@ -1,6 +1,6 @@
 {
   "name": "debuno",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Deno module resolution for Bun and Node",
   "module": "index.ts",
   "type": "module",
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "pkgroll --src ./ --dist ./out",
-    "prepublishOnly": "npm version patch && bun run build"
+    "pub": "npm version patch --force && bun run build && bun publish"
   },
   "devDependencies": {
     "@types/deno": "^2.0.0",
