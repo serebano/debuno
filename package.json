@@ -1,13 +1,28 @@
 {
   "name": "debuno",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "Deno module resolution for Bun and Node",
   "module": "index.ts",
   "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
+  "exports": {
+    ".": {
+      "import": "./out/index.js",
+      "types": "./out/index.d.ts"
+    }
   },
-  "peerDependencies": {
-    "typescript": "^5.5.0"
-  }
+  "scripts": {
+    "build": "pkgroll --src ./ --dist ./out",
+    "prepublishOnly": "bun run build"
+  },
+  "devDependencies": {
+    "@types/deno": "^2.0.0",
+    "@types/bun": "^1.1.13",
+    "@types/node": "^22.8.7",
+    "pkgroll": "^2.5.1",
+    "typescript": "^5.6.3"
+  },
+  "files": [
+    "out",
+    "*.ts"
+  ]
 }
