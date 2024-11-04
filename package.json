@@ -1,6 +1,6 @@
 {
   "name": "debuno",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Deno module resolution for Bun & Node",
   "repository": {
     "type": "git",
@@ -18,6 +18,9 @@
   "scripts": {
     "build": "pkgroll --src ./ --dist ./out",
     "pub": "npm version patch --force && bun run build && bun publish"
+  },
+  "dependencies": {
+    "bun-types": "^1.1.34"
   },
   "devDependencies": {
     "@types/deno": "^2.0.0",
