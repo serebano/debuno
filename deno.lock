@@ -1,0 +1,14 @@
+{
+  "version": "4",
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@types/bun@^1.1.13",
+        "npm:@types/deno@2",
+        "npm:@types/node@^22.8.7",
+        "npm:pkgroll@^2.5.1",
+        "npm:typescript@^5.6.3"
+      ]
+    }
+  }
+}

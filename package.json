@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "pkgroll --src ./ --dist ./out",
-    "prepublishOnly": "bun run build"
+    "prepublishOnly": "npm version patch && bun run build"
   },
   "devDependencies": {
     "@types/deno": "^2.0.0",
