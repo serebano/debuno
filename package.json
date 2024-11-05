@@ -1,6 +1,6 @@
 {
   "name": "debuno",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Deno module resolution for Bun & Node",
   "repository": {
     "type": "git",
