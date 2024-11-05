@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "types": [
+            "./deno.d.ts",
+            "./bun.d.ts"
+        ]
+    }
+}
