@@ -1,6 +1,6 @@
 {
   "name": "debuno",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Deno module resolution for Bun & Node",
   "repository": {
     "type": "git",
@@ -17,7 +17,8 @@
     "pkgroll": "pkgroll --src ./ --dist ./out",
     "bundle": "bun build --target node ./index.ts --outdir ./out",
     "bundle-dts": "dts-bundle-generator --no-banner --no-check -o ./out/index.d.ts ./index.ts",
-    "build": "bun run clean && bun run denolib && bun run bundle && bun run bundle-dts",
+    "dts-ref": "printf '%s\n%s\n' \"/// <reference types='../types.d.ts' />\" \"$(cat out/index.d.ts)\" >out/index.d.ts",
+    "build": "bun run clean && bun run denolib && bun run bundle && bun run bundle-dts && bun run dts-ref",
     "pub": "npm version patch --force && bun run build && bun publish"
   },
   "files": [
