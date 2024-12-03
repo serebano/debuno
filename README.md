@@ -1,16 +1,29 @@
 # debuno
 
-Deno module resolution for Bun and Node
+```ts
+// app.ts
 
-Install
+import "https://docs.deno.com/examples/hello-world.ts";
 
-```bash
-bun add debuno
+// import hono from "https://esm.sh/hono";
+// import hono from "jsr:@hono/hono";
+// import hono from "npm:hono";
 ```
 
-Use
+## Deno
 
-```bash
-bun --preload debuno ./index.ts
-node --import debuno ./index.ts
+```sh
+deno --watch app.ts
+```
+
+## Bun
+
+```sh
+bun --preload debuno --watch app.ts
+```
+
+## Node
+
+```sh
+node --import debuno --watch app.ts
 ```
