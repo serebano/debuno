@@ -3,7 +3,6 @@
         "bun": "npm:bun-types@^1.1.38",
         "bytes": "jsr:@std/bytes",
         "hono": "jsr:@hono/hono@^4.6.12",
-        "@hono/node-server": "npm:@hono/node-server@1.13.7",
         "@std/assert": "jsr:@std/assert@^1.0.6",
         "@std/bytes": "jsr:@std/bytes@^1.0.2",
         "@std/encoding": "jsr:@std/encoding@^1.0.5",

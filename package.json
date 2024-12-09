@@ -1,7 +1,12 @@
 {
     "name": "debuno",
-    "version": "0.1.1",
+    "version": "0.1.5",
     "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/serebano/debuno.git"
+    },
+    "homepage": "https://github.com/serebano/debuno",
     "scripts": {
         "build": "./build",
         "dev:node": "node --import debuno --watch example/app.ts",
@@ -15,11 +20,12 @@
         "./register": {
             "bun": "./bun/register.ts",
             "node": "./node/register.js"
+        },
+        "./api": {
+            "bun": "./shared/api.ts",
+            "deno": "./shared/api.ts",
+            "types": "./shared/api.ts",
+            "import": "./dist/shared/api.js"
         }
-    },
-    "devDependencies": {
-        "bun-types": "^1.1.38",
-        "esbuild": "^0.24.0",
-        "@types/bun": "^1.1.14"
     }
 }

@@ -1,23 +1,31 @@
 import { utimesSync, closeSync, openSync } from "node:fs";
 import { spawn, spawnSync } from "node:child_process";
+import process from "node:process";
+import logger from "./logger.ts";
 
 export function cache(specifier: string) {
 	return new Promise((resolve, reject) => {
 		const start = Date.now();
 
-		const res = spawn("deno", ["cache", "--allow-import", specifier], {
+		const args = ["cache", "--no-lock", "--allow-import"]
+		const argv = process.argv.splice(2)
+		if (argv.length) {
+			args.push(...argv)
+		}
+
+		const res = spawn("deno", [...args, specifier], {
 			stdio: "inherit",
 		});
 
 		res.on("close", (code) => {
 			const took = Date.now() - start;
-			console.log("$", "cache", specifier, took, "ms");
+			logger.log("$", ...args, specifier, took, "ms");
 			resolve(code);
 		});
 
 		res.on("error", (err) => {
 			const took = Date.now() - start;
-			console.error("$", "cache", specifier, took, "ms");
+			logger.error("$", ...args, specifier, took, "ms");
 			reject(err);
 		});
 	});
@@ -26,12 +34,19 @@ export function cache(specifier: string) {
 export function cacheSync(specifier: string) {
 	const start = Date.now();
 
-	const res = spawnSync("deno", ["cache", "--allow-import", specifier], {
+	const args = ["cache", "--no-lock", "--allow-import"]
+	const argv = process.argv.splice(2)
+	if (argv.length) {
+		args.push(...argv)
+	}
+
+	const res = spawnSync("deno", [...args, specifier], {
 		stdio: "inherit",
 	});
 
 	const took = Date.now() - start;
-	console.log("$", "cacheSync", specifier, took, "ms");
+
+	logger.log("$", ...args, specifier, took, "ms");
 
 	if (res.status !== 0) {
 		throw new Error(res.stderr.toString());
@@ -53,12 +68,11 @@ export function clean() {
 }
 
 export function touch(filename: string) {
-	const time = new Date();
-
+	const time = new Date()
 	try {
 		utimesSync(filename, time, time);
 	} catch (err) {
-		console.log("touch error", err);
+		logger.log("touch error", err);
 		closeSync(openSync(filename, "w"));
 	}
 }

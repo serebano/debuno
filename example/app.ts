@@ -34,7 +34,7 @@ export async function serve({ fetch, onListen }: { fetch: (request: Request) => 
         }
 
         case "node":
-            return (await import('@hono/node-server'))
+            return (await import('npm:@hono/node-server'))
                 .serve({
                     port: PORTS[RUNTIME],
                     fetch,

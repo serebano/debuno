@@ -11,6 +11,7 @@ import type { WasmWorkspace, WasmWorkspaceResolver } from "../wasm/loader.genera
 import { type InfoOptions, type ModuleEntryEsm, type ModuleEntryJson, type ModuleEntryNode, type ModuleEntryNpm } from './ModuleStore.ts'
 import { statSync } from "node:fs";
 import { cache, cacheSync } from "./cache.ts";
+import { DEBUG } from "./debug.ts";
 
 export {
     esbuildResolutionToURL,
@@ -30,7 +31,6 @@ export * as fs from "./fs.ts";
 export * as url from "./url.ts";
 export * as path from "./path.ts";
 
-export const DEBUG = process.env.DEBUG === "1" || process.env.DEBUG === "true";
 
 // console.log({
 //     yellow: Bun.color("yellow", "ansi"),

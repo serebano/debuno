@@ -1,6 +1,7 @@
 import { cmdSync } from "./cmd.ts";
 import * as fs from "./fs.ts"
 import * as path from "./path.ts"
+import process from "node:process";
 
 export const denoVersion = '2' //new TextDecoder().decode(cmdSync(["-V"]).stdout).split(" ")[1]
 
@@ -16,7 +17,7 @@ let tmpDir: string | undefined;
 
 export function rootInfo(): RootInfoOutput {
   const opts = {
-    args: ["info", "--json"],
+    args: ["info", "--json", "--no-lock"],
     cwd: tmpDir,
     env: { DENO_NO_PACKAGE_JSON: "true" } as Record<string, string>,
   };
@@ -149,7 +150,13 @@ export function info(
   specifier: string,
   options: InfoOptions,
 ): InfoOutput {
-  return __info__cache__(specifier, options, ["info", "--json"]);
+  const args = ["info", "--json"]
+  // const argv = process.argv.splice(2)
+  // if (argv.length) {
+  //   args.push(...argv)
+  // }
+
+  return __info__cache__(specifier, options, args);
 }
 
 export function cache(
@@ -192,7 +199,11 @@ function __info__cache__(
   }
   if (typeof options.lock === "string") {
     opts.args.push("--lock", options.lock);
-  } else if (!options.cwd) {
+  }
+  //  else if (!options.cwd) {
+  //   opts.args.push("--no-lock");
+  // }
+  else {
     opts.args.push("--no-lock");
   }
   if (options.nodeModulesDir !== undefined) {
@@ -269,6 +280,7 @@ export class ModuleStore {
 
   get(specifier: string): ModuleEntry {
     if (!specifier) throw new Error(`Invalid specifier: "${specifier}"`)
+
     let entry = this.#getCached(specifier);
     if (entry !== undefined) return entry;
 

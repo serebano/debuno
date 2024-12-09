@@ -2,9 +2,10 @@
 // deno-lint-ignore-file no-explicit-any
 
 import type { BunPlugin, PluginBuilder } from "bun";
-import api, { BUILTIN_NODE_MODULES, esbuildResolutionToURL, isHttpOrHttps, isNodeModulesResolution, urlToEsbuildResolution, fs, path, log, url, DEBUG, isInNodeModules } from "../shared/api.ts";
+import api, { BUILTIN_NODE_MODULES, esbuildResolutionToURL, isHttpOrHttps, isNodeModulesResolution, urlToEsbuildResolution, fs, path, log, url, isInNodeModules } from "../shared/api.ts";
 import { pathToFileURL } from "../shared/url.ts";
-import { isNodeModule } from "../shared_cross.ts";
+import process from "node:process";
+import { DEBUG } from "../shared/debug.ts";
 
 
 function patchBuilder(builder: PluginBuilder, api: { before: (type: 'resolve' | 'load', obj: any) => void, after: (type: 'resolve' | 'load', obj: any) => void }) {
@@ -130,7 +131,7 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 			}) {
 				// throw new Error(JSON.stringify(args))
 				// console.log('~ resolve', args)
-				if (args.importer === 'bun:main') {
+				if (args.importer === 'bun:main' || args.importer === process.argv[1]) {
 					api.cacheSync(args.path)
 				}
 
@@ -150,79 +151,6 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 					}
 				}
 
-				// if (isNodeModulesResolution(args)) {
-				// 	if (
-				// 		BUILTIN_NODE_MODULES.has(args.path) ||
-				// 		BUILTIN_NODE_MODULES.has("node:" + args.path)
-				// 	) {
-				// 		return {
-				// 			path: args.path,
-				// 			external: true,
-				// 		};
-				// 	}
-				// 	const { dirname } = path
-
-				// 	if (nodeModulesDir !== null) {
-				// 		return undefined;
-				// 	} else {
-				// 		let parentPackageId: string | undefined;
-				// 		let path = args.importer;
-				// 		while (true) {
-				// 			const packageId = packageIdByNodeModules.get(path);
-				// 			if (packageId) {
-				// 				parentPackageId = packageId;
-				// 				break;
-				// 			}
-				// 			const pathBefore = path;
-				// 			path = dirname(path);
-				// 			if (path === pathBefore) break;
-				// 		}
-				// 		if (!parentPackageId) {
-				// 			throw new Error(
-				// 				`Could not find package ID for importer: ${args.importer}`,
-				// 			);
-				// 		}
-				// 		if (args.path.startsWith(".")) {
-				// 			return undefined;
-				// 		} else {
-				// 			let packageName: string;
-				// 			let pathParts: string[];
-				// 			if (args.path.startsWith("@")) {
-				// 				const [scope, name, ...rest] = args.path.split("/");
-				// 				packageName = `${scope}/${name}`;
-				// 				pathParts = rest;
-				// 			} else {
-				// 				const [name, ...rest] = args.path.split("/");
-				// 				packageName = name;
-				// 				pathParts = rest;
-				// 			}
-				// 			const packageId = api.loader.packageIdFromNameInPackage(
-				// 				packageName,
-				// 				parentPackageId,
-				// 			);
-				// 			const id = packageId ?? parentPackageId;
-				// 			const resolveDir = api.loader.nodeModulesDirForPackage(id);
-				// 			packageIdByNodeModules.set(resolveDir, id);
-				// 			const path = [packageName, ...pathParts].join("/");
-
-				// 			// const resolved = Bun.resolveSync(path, resolveDir)
-				// 			// console.log('Bun.resolveSync', resolved)
-
-				// 			return {
-				// 				path,
-				// 				external: true
-				// 			}
-				// 			// return await build.resolve(path, {
-				// 			// 	kind: args.kind,
-				// 			// 	resolveDir,
-				// 			// 	importer: args.importer,
-				// 			// });
-
-				// 		}
-
-				// 	}
-				// }
-
 				if (args.namespace === 'file' && isHttpOrHttps(args.importer)) {
 					return urlToEsbuildResolution(new URL(args.path, args.importer))
 				}
@@ -235,7 +163,7 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 							: pathToFileURL(importer).href
 
 						const info = api.info(args.path, referrer)
-						// console.log('info', info)
+
 						if (info.dependencies) {
 							const map = info.dependencies
 								.filter(i => !isRelOrAbs(i.specifier) && (i.specifier !== i.code?.specifier) && i.specifier !== i.type?.specifier)

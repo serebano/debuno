@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
 import process from "node:process";
+import logger from "./logger.ts";
 
 const runtime = (navigator.userAgent.includes("Deno")
     ? 'deno'
@@ -18,7 +19,7 @@ export function cmdSync(args: string[], opts: { cwd?: string, env?: Record<strin
     const execPath = 'deno'
     opts.env = { PATH: process.env.PATH!, ...opts.env }
 
-    console.log('$', ...args)
+    logger.log('$', ...args)
 
     switch (runtime) {
         case "deno": {
