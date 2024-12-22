@@ -1,4 +1,4 @@
-// debuno 0.1.5
+// debuno 0.1.8
 import {
   BUILTIN_NODE_MODULES,
   InitOptions,
@@ -18,7 +18,8 @@ import {
   path_exports,
   urlToEsbuildResolution,
   url_exports
-} from "../chunk-CXRSXA72.js";
+} from "../chunk-WRT3CKST.js";
+import "../chunk-YW64QGXT.js";
 export {
   BUILTIN_NODE_MODULES,
   InitOptions,

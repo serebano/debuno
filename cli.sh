@@ -1,0 +1,1 @@
+$(echo "$1 --import ./index.js --enable-source-maps $2 $3")

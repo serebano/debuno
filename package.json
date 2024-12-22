@@ -1,17 +1,20 @@
 {
     "name": "debuno",
-    "version": "0.1.5",
+    "version": "0.1.8",
     "type": "module",
     "repository": {
         "type": "git",
         "url": "https://github.com/serebano/debuno.git"
     },
     "homepage": "https://github.com/serebano/debuno",
+    "description": "Bring Deno module resolution to Bun & Node",
     "scripts": {
-        "build": "./build",
+        "build": "./build.ts && ./version.ts",
+        "prepublishOnly": "bun run build",
         "dev:node": "node --import debuno --watch example/app.ts",
         "dev:bun": "bun --preload debuno --watch example/app.ts"
     },
+    "bin": "./cli.js",
     "exports": {
         ".": {
             "bun": "./bun/index.ts",
@@ -26,6 +29,15 @@
             "deno": "./shared/api.ts",
             "types": "./shared/api.ts",
             "import": "./dist/shared/api.js"
-        }
+        },
+        "./package.json": "./package.json"
+    },
+    "engines": {
+        "deno": "2.1.4",
+        "bun": "1.1.40",
+        "node": "22.9.0"
+    },
+    "dependencies": {
+        "bun-types": "^1.1.42"
     }
 }

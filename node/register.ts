@@ -37,12 +37,22 @@ export function register(options?: RegisterOptions) {
         api.addEventListener('loaded', options.onLoaded)
     }
 
-    const main = resolveMain(pathToFileURL(process.argv[1]).href).resolved
 
-    try {
-        api.cacheSync(main)
-    } catch (e: any) {
-        console.log(e.message)
+    let main = null;
+    if (process.argv[1]) {
+        console.log('process.argv[1]', process.argv[1])
+
+        main = process.argv[1].startsWith('-')
+            ? null
+            : resolveMain(pathToFileURL(process.argv[1]).href).resolved
+
+        if (main) {
+            try {
+                api.cacheSync(main)
+            } catch (e: any) {
+                console.log(e.message)
+            }
+        }
     }
 
     module.register("./node/index.js", {
