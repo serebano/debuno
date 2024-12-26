@@ -1,15 +1,15 @@
-// debuno 0.1.14
+// debuno 0.1.16
 import {
   createClient,
   register,
   resolveMain
-} from "../chunk-FZQXJVYY.js";
+} from "../chunk-2RAK374A.js";
 import {
   isNodeModule,
   isNodeModulesResolution,
   parseNpmSpecifier,
   readFile
-} from "../chunk-H76E5B4F.js";
+} from "../chunk-ZOXVSYFK.js";
 
 // node/index.ts
 import { isMainThread } from "node:worker_threads";
