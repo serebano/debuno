@@ -2,8 +2,7 @@
 
 ## Install
 ```sh
-curl -fsSL https://debuno.dev/install | sh
-curl -fsSL http://0.0.0.0:8000/install | sh
+curl -o- https://debuno.dev/install | sh
 ```
 
 ```ts
