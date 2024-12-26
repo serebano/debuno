@@ -1,0 +1,29 @@
+#!/bin/sh
+
+_IS_DEV=false
+_BIN=$HOME/.debuno/bin/debuno
+_DENO_BIN=$HOME/.deno/bin/debuno
+
+_BASE=$(dirname $(realpath $0))
+_INSTALL_DIR=$HOME/.debuno
+
+if [ -d $_BASE/.git ]; then  
+    _IS_DEV=true
+    _INSTALL_DIR=$_BASE
+
+    echo "Installing debuno in dev mode..."
+else
+    echo "Installing debuno..."
+    git clone https://github.com/serebano/debuno.git $HOME/.debuno
+fi
+
+_BIN_DIR=$_INSTALL_DIR/bin
+_EXE=$_BIN_DIR/debuno
+
+if [ -L $_DENO_BIN ]; 
+    then rm $_DENO_BIN; fi
+
+if ! [ -L $_DENO_BIN ]; 
+    then ln -s $_BIN $_DENO_BIN; fi
+
+exec debuno check

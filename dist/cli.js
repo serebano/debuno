@@ -1,10 +1,10 @@
 #!/usr/bin/env bun
-// debuno 0.1.9
+// debuno 0.1.10
 
 // cli.ts
 import process from "node:process";
 var $ = Bun.$;
-var pkg = (await import("./package-T3FSXZ67.js")).default;
+var pkg = (await import("./package-B56U5CMV.js")).default;
 var [subcmd, ...args] = process.argv.slice(2);
 console.log("");
 console.log(`  ${pkg.name} ${pkg.version}`);

@@ -1,8 +1,8 @@
-// debuno 0.1.9
+// debuno 0.1.10
 
 // index.ts
 if (navigator.userAgent.includes("Bun")) {
-  await import("./bun-IW2RJXA2.js");
+  await import("./bun-TE4QFW7D.js");
 } else if (navigator.userAgent.includes("Node")) {
   await import("./node/index.js");
 }

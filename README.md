@@ -1,7 +1,8 @@
 # debuno
 
+## Install
 ```sh
-curl -fsSL https://debuno.dev/install.sh | sh
+curl -fsSL https://debuno.dev/install | sh
 ```
 
 ```ts
