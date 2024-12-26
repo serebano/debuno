@@ -1,0 +1,14 @@
+{
+    "name": "create-debuno-dev",
+    "version": "0.0.1",
+    "main": "index.ts",
+    "bun-create": {
+        "start": "bun run dev"
+    },
+    "scripts": {
+        "dev:deno": "deno -A index.ts",
+        "dev:bun": "bun --preload debuno index.ts",
+        "dev:node": "node --import debuno index.ts",
+        "dev": "bun run dev:deno && bun run dev:bun && bun run dev:node"
+    }
+}

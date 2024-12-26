@@ -1,0 +1,10 @@
+#!/bin/sh
+
+_BASE=$(dirname $(dirname $(realpath $0)))
+
+_RUN=$_BASE/scripts/run.sh
+
+echo "_BASE: $_BASE"
+echo "_RUN: $_RUN"
+
+exec $_RUN "$@"

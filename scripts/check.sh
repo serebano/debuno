@@ -1,5 +1,3 @@
-echo "Checking installed runtimes..."
-echo "---------------------------------"
 
 # Deno
 if [ "$(which deno)" != "" ]; 
@@ -25,4 +23,12 @@ then
 else
     echo "  Node: not installed"
 fi
-echo "---------------------------------"
+
+# Debuno
+if [ "$(which debuno)" != "" ]; 
+then
+    echo "  Debuno: $(debuno -v) $(which debuno)"
+else
+    echo "  Debuno: not installed"
+fi
+

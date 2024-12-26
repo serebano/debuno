@@ -1,0 +1,6 @@
+{
+    "imports": {
+        "hello-world": "https://docs.deno.com/examples/scripts/hello_world.ts"
+    },
+    "lock": false
+}

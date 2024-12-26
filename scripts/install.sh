@@ -5,12 +5,21 @@ curl -fsSL https://deno.land/install.sh | sh -s -- -y
 curl -fsSL https://bun.sh/install | bash
 
 # node
-# installs nvm (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
 nvm install 22
 
-# install debuno
-deno install npm:debuno --global -A
+
+git clone https://github.com/serebano/debuno.git $HOME/.debuno
+
+_BIN=$HOME/.debuno/bin/debuno
+_DENO_BIN=$HOME/.deno/bin/debuno
+
+if [ -L $_DENO_BIN ]; 
+    then rm $_DENO_BIN; fi
+
+if ! [ -L $_DENO_BIN ]; 
+    then ln -s $_BIN $_DENO_BIN; fi
+
+exec debuno check

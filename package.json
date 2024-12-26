@@ -1,6 +1,6 @@
 {
     "name": "debuno",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "type": "module",
     "repository": {
         "type": "git",
@@ -14,7 +14,7 @@
         "dev:node": "node --import debuno --watch example/app.ts",
         "dev:bun": "bun --preload debuno --watch example/app.ts"
     },
-    "bin": "./cli.js",
+    "bin": "./cli.ts",
     "exports": {
         ".": {
             "bun": "./bun/index.ts",

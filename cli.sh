@@ -1,1 +1,4 @@
-$(echo "$1 --import ./index.js --enable-source-maps $2 $3")
+
+BASEDIR=$(dirname $0)
+
+exec $(dirname $0)/scripts/run.sh "$@"

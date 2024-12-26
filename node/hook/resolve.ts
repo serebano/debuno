@@ -83,6 +83,6 @@ export const resolve: ResolveHook = async (
 
         return result
     } catch (e: any) {
-        throw new Error(e.message)
+        throw e
     }
 }

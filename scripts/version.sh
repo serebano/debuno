@@ -1,3 +1,3 @@
-echo "[de] $(deno -v) $(which deno)"
-echo "[bu] bun $(bun -v) $(which bun)"
-echo "[no] node $(node -v) $(which node)"
+_BASE=$(dirname $(dirname $(realpath $0)))
+
+jq '.version' $_BASE/package.json

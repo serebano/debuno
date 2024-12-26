@@ -40,7 +40,7 @@ export function register(options?: RegisterOptions) {
 
     let main = null;
     if (process.argv[1]) {
-        console.log('process.argv[1]', process.argv[1])
+        // console.log('process.argv[1]', process.argv[1])
 
         main = process.argv[1].startsWith('-')
             ? null
