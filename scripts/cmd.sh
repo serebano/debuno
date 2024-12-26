@@ -17,7 +17,7 @@ do
             _ARGS+=("$@")
             break
         ;;
-        check)
+        info)
             _PATH="$_BASE/$_ARG.sh"
             shift
             _ARGS+=("$@")
@@ -41,6 +41,12 @@ do
             _ARGS+=("$@")
             break
         ;;
+        upgrade)
+            _PATH="$_BASE/$_ARG.sh"
+            shift
+            _ARGS+=("$@")
+            break
+        ;;
         dev)
             _PATH="$_BASE/$_ARG.sh"
             shift
@@ -48,13 +54,11 @@ do
             break
         ;;
         *)
-            echo "Usage: debuno [init|check|link|unlink|reinstall]"
+            echo "Usage: debuno [init|info|link|unlink|upgrade|reinstall]"
             exit 1
         ;;
     esac
 done
-
-# echo "CMD _PATH: $_PATH"
 
 exec $_PATH ${_ARGS[*]}
 

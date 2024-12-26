@@ -1,3 +1,14 @@
-echo "pre comit"
+#!/bin/sh
+_BASE=$(dirname $(dirname $(realpath $0)))
+_VERSION=$(jq -r '.version' $_BASE/package.json)
 
-exit 1
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+npm --no-git-tag-version version patch
+
+$_BASE/build/build.ts
+
+echo $($_BASE/bin/debuno -v) > $_BASE/version
+
+# exit 1
