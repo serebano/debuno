@@ -11,4 +11,5 @@ $_BASE/build/build.ts
 
 echo $($_BASE/bin/debuno -v) > $_BASE/version
 
+git add $_BASE
 # exit 1

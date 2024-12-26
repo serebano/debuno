@@ -1,8 +1,8 @@
-// debuno 0.1.16
+// debuno 0.1.18
 import {
   register
-} from "../chunk-2RAK374A.js";
-import "../chunk-ZOXVSYFK.js";
+} from "../chunk-NRKDPLZ3.js";
+import "../chunk-ZU3IHHEC.js";
 export {
   register
 };
