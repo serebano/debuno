@@ -4,7 +4,7 @@
 // cli.ts
 import process from "node:process";
 var $ = Bun.$;
-var pkg = (await import("./package-B56U5CMV.js")).default;
+var pkg = (await import("./package-SONM5TVL.js")).default;
 var [subcmd, ...args] = process.argv.slice(2);
 console.log("");
 console.log(`  ${pkg.name} ${pkg.version}`);

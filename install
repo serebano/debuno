@@ -1,23 +1,22 @@
 #!/bin/sh
 
-_IS_DEV=false
 _DENO_BIN=$HOME/.deno/bin/debuno
-
-_BASE=$(dirname $(realpath $0))
 _INSTALL_DIR=$HOME/.debuno
 
 rm -rf $_INSTALL_DIR
 
-if [ -d $_BASE/.git ]; then  
-    _IS_DEV=true
-    _INSTALL_DIR=$_BASE
+if  [ "$0" = "sh" ]; then  
+    echo "Installing debuno..."
+    echo "INSTALL_DIR: $_INSTALL_DIR"
+    echo
+
+    git clone https://github.com/serebano/debuno.git $_INSTALL_DIR
+else
+    _INSTALL_DIR=$(dirname $(realpath $0))
 
     echo "Installing debuno in dev mode..."
     echo "INSTALL_DIR: $_INSTALL_DIR"
-else
-    echo "Installing debuno..."
-    echo "INSTALL_DIR: $_INSTALL_DIR"
-    git clone https://github.com/serebano/debuno.git $_INSTALL_DIR
+    echo
 fi
 
 _BIN_DIR=$_INSTALL_DIR/bin

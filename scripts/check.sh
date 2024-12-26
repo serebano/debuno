@@ -27,7 +27,7 @@ fi
 # Debuno
 if [ "$(which debuno)" != "" ]; 
 then
-    echo "  Debuno: $(debuno -v) $(which debuno)"
+    echo "  Debuno: $(debuno -v) $(realpath $(which debuno))"
 else
     echo "  Debuno: not installed"
 fi

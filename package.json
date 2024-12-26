@@ -1,43 +1,44 @@
 {
-    "name": "debuno",
-    "version": "0.1.10",
-    "type": "module",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/serebano/debuno.git"
+  "name": "debuno",
+  "version": "0.1.10",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/serebano/debuno.git"
+  },
+  "homepage": "https://github.com/serebano/debuno",
+  "description": "Bring Deno module resolution to Bun & Node",
+  "scripts": {
+    "build": "./build.ts && ./version.ts",
+    "prepublishOnly": "bun run build",
+    "dev:node": "node --import debuno --watch example/app.ts",
+    "dev:bun": "bun --preload debuno --watch example/app.ts",
+    "prepare": "husky"
+  },
+  "bin": "./cli.ts",
+  "exports": {
+    ".": {
+      "bun": "./bun/index.ts",
+      "node": "./node/index.js"
     },
-    "homepage": "https://github.com/serebano/debuno",
-    "description": "Bring Deno module resolution to Bun & Node",
-    "scripts": {
-        "build": "./build.ts && ./version.ts",
-        "prepublishOnly": "bun run build",
-        "dev:node": "node --import debuno --watch example/app.ts",
-        "dev:bun": "bun --preload debuno --watch example/app.ts"
+    "./register": {
+      "bun": "./bun/register.ts",
+      "node": "./node/register.js"
     },
-    "bin": "./cli.ts",
-    "exports": {
-        ".": {
-            "bun": "./bun/index.ts",
-            "node": "./node/index.js"
-        },
-        "./register": {
-            "bun": "./bun/register.ts",
-            "node": "./node/register.js"
-        },
-        "./api": {
-            "bun": "./shared/api.ts",
-            "deno": "./shared/api.ts",
-            "types": "./shared/api.ts",
-            "import": "./dist/shared/api.js"
-        },
-        "./package.json": "./package.json"
+    "./api": {
+      "bun": "./shared/api.ts",
+      "deno": "./shared/api.ts",
+      "types": "./shared/api.ts",
+      "import": "./dist/shared/api.js"
     },
-    "engines": {
-        "deno": "2.1.4",
-        "bun": "1.1.40",
-        "node": "22.9.0"
-    },
-    "dependencies": {
-        "bun-types": "^1.1.42"
-    }
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "deno": "2.1.4",
+    "bun": "1.1.40",
+    "node": "22.9.0"
+  },
+  "dependencies": {
+    "bun-types": "^1.1.42"
+  }
 }
