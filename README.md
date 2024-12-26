@@ -1,5 +1,9 @@
 # debuno
 
+```sh
+curl -fsSL https://debuno.dev/install.sh | sh
+```
+
 ```ts
 // app.ts
 
