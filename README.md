@@ -1,34 +1,38 @@
 # debuno
+Bring Deno module resolution to Bun & Node
 
 ## Install
 ```sh
 curl -o- https://debuno.dev/install | sh
 ```
 
-```ts
-// app.ts
-
-import "https://docs.deno.com/examples/hello-world.ts";
-
-// import hono from "https://esm.sh/hono";
-// import hono from "jsr:@hono/hono";
-// import hono from "npm:hono";
+## Usage
+```sh
+debuno init foo
+cd foo
 ```
+
 
 ## Deno
 
 ```sh
-deno --watch app.ts
+deno index.ts
+# or
+debuno deno index.ts
 ```
 
 ## Bun
 
 ```sh
-bun --preload debuno --watch app.ts
+bun --preload debuno index.ts
+# or
+debuno bun index.ts
 ```
 
 ## Node
 
 ```sh
-node --import debuno --watch app.ts
+node --import debuno index.ts
+# or
+debuno node index.ts
 ```
