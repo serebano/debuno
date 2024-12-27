@@ -1,4 +1,4 @@
-// debuno 0.1.22
+// debuno 0.1.23
 import {
   BUILTIN_NODE_MODULES,
   InitOptions,
@@ -18,7 +18,7 @@ import {
   path_exports,
   urlToEsbuildResolution,
   url_exports
-} from "../chunk-P3CUGXOQ.js";
+} from "../chunk-5BCH7SOB.js";
 export {
   BUILTIN_NODE_MODULES,
   InitOptions,

@@ -1,43 +1,105 @@
 #!/bin/sh
 
-# deno
-curl -fsSL https://deno.land/install.sh | sh -s -- -y
+function install_deps() {
+    # Deno
+    if [ "$(which deno)" != "" ]; 
+    then
+        v=$(deno -v)
+        echo "${v//deno/Deno:       }   $(which deno)"
+    else
+        curl -fsSL https://deno.land/install.sh | sh -s -- -y
+    fi
 
-# bun
-curl -fsSL https://bun.sh/install | bash
+    # Bun
+    if [ "$(which bun)" != "" ]; 
+    then
+        echo "Bun:         $(bun -v)   $(which bun)"
+    else
+        curl -fsSL https://bun.sh/install | bash
+    fi
 
-# node
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-nvm install 22
+    # Node
+    if [ "$(which node)" != "" ]; 
+    then
+        echo "Node:        $(node -v)   $(which node)"
+    else
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        nvm install 22
+    fi
+}
 
-_DENO_BIN=$HOME/.deno/bin/debuno
-_INSTALL_DIR=$HOME/.debuno
+function install() {
+    if [ "$(which debuno)" != "" ]; then
+        echo "Current version: $(debuno -v)   ($(realpath $(which debuno)))"
+    fi
 
-rm -rf $_INSTALL_DIR
-
-if  [ "$0" = "sh" ]; then  
-    echo "Installing debuno..."
-    echo "INSTALL_DIR: $_INSTALL_DIR"
+    echo "Installing version: $(curl -s https://debuno.dev/version)"
     echo
 
-    git clone https://github.com/serebano/debuno.git $_INSTALL_DIR
-else
-    _INSTALL_DIR=$(dirname $(realpath $0))
+    DENO_DIR=$HOME/.deno
+    DEBUNO_DIR=$HOME/.debuno
 
-    echo "Installing debuno in dev mode..."
-    echo "INSTALL_DIR: $_INSTALL_DIR"
+    BIN_FILE=$DEBUNO_DIR/bin/debuno
+    BIN_LINK=$DENO_DIR/bin/debuno
+
+    rm -rf $DEBUNO_DIR
+    git clone https://github.com/serebano/debuno.git $DEBUNO_DIR
+
+    if [ -L $BIN_LINK ]; then rm $BIN_LINK; fi
+
+    ln -s $BIN_FILE $BIN_LINK;
+
     echo
+    echo "Installed: $($BIN_FILE -v) $BIN_FILE"
+}
+
+function install_local() {
+    DENO_DIR=$HOME/.deno
+    DEBUNO_DIR=$(dirname $(realpath $0))
+    BIN_FILE=$DEBUNO_DIR/bin/debuno
+    BIN_LINK=$DENO_DIR/bin/debuno
+
+    if [ "$(which debuno)" != "" ]; then
+        echo "Current:     $(debuno -v)   ($(realpath $(which debuno)))"
+    fi
+
+        echo "Installing:  $(cat $DEBUNO_DIR/version)   ($BIN_FILE)"
+        echo
+
+
+   
+    if [ -L $BIN_LINK ]; then rm $BIN_LINK; fi
+
+    ln -s $BIN_FILE $BIN_LINK;
+
+    echo
+    echo "Installed:   $($BIN_FILE -v)   $BIN_FILE"
+}
+
+function uninstall() {
+    rm -rf $HOME/.deno
+    rm -rf $HOME/.bun
+    rm -rf $HOME/.nvm
+    rm -rf $HOME/.npm
+    rm -rf $HOME/.debuno
+}
+
+if [ "$1" == "-r" ]; then
+    # ./install -r
+    uninstall;
 fi
 
-_BIN_DIR=$_INSTALL_DIR/bin
-_BIN=$_BIN_DIR/debuno
+install_deps;
 
-if [ -L $_DENO_BIN ]; 
-    then rm $_DENO_BIN; fi
+echo;
 
-if ! [ -L $_DENO_BIN ]; 
-    then ln -s $_BIN $_DENO_BIN; fi
-
-exec debuno info
+if [ "$(basename $0)" == "install" ]; then
+    # ./install
+    install_local;
+else
+    # curl -fsSL https://debuno.dev/install | sh
+    # cat ./install | sh
+    install;
+fi
