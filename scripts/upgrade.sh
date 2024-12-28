@@ -31,11 +31,6 @@ function install() {
     echo "Installed: $($_BIN -v) $_BIN"
 }
 
-# echo "Current version: $(debuno -v) $(realpath $(which debuno))"
-# echo
-# echo "Checking for updates..."
-# echo
-
 if [ $latest_version_number -gt $installed_version_number -o "$1" == "-f" ]; then
     install;
 else

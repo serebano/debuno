@@ -79,6 +79,7 @@ function install_local() {
 }
 
 function uninstall() {
+    if [ "$(which deno)" != "" ]; then deno clean; fi
     rm -rf $HOME/.deno
     rm -rf $HOME/.bun
     rm -rf $HOME/.nvm

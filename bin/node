@@ -1,0 +1,4 @@
+#!/bin/sh
+_BASE=$(dirname $(dirname $(realpath $0)))
+
+exec node --import $_BASE/node/index.js --enable-source-maps "$@"

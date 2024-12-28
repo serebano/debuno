@@ -1,9 +1,12 @@
-# uninstall deno
-rm -rf ~/.deno 
+#!/bin/sh
 
-# uninstall bun
-rm -rf ~/.bun 
+function uninstall() {
+    if [ "$(which deno)" != "" ]; then deno clean; fi
+    rm -rf $HOME/.deno
+    rm -rf $HOME/.bun
+    rm -rf $HOME/.nvm
+    rm -rf $HOME/.npm
+    rm -rf $HOME/.debuno
+}
 
-# uninstall node
-rm -rf ~/.nvm
-
+uninstall

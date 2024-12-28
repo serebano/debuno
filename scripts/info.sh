@@ -1,3 +1,4 @@
+#!/bin/sh
 
 # Deno
 if [ "$(which deno)" != "" ]; 

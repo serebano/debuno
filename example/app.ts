@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { Hono } from "jsr:@hono/hono"
+import { Hono } from "npm:hono" //"jsr:@hono/hono"
 import { RUNTIME } from '../shared/runtime.ts'
 
 export const app = new Hono()

@@ -1,9 +1,3 @@
-// debuno 0.1.23
-
-// index.ts
-if (navigator.userAgent.includes("Bun")) {
-  await import("./bun-D6NMDFN4.js");
-} else if (navigator.userAgent.includes("Node")) {
-  await import("./node/index.js");
-}
-//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiLi4vaW5kZXgudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImlmIChuYXZpZ2F0b3IudXNlckFnZW50LmluY2x1ZGVzKFwiQnVuXCIpKSB7XG4gICAgYXdhaXQgaW1wb3J0KFwiLi9idW4vaW5kZXgudHNcIilcbn0gZWxzZSBpZiAobmF2aWdhdG9yLnVzZXJBZ2VudC5pbmNsdWRlcyhcIk5vZGVcIikpIHtcbiAgICBhd2FpdCBpbXBvcnQoXCIuL25vZGUvaW5kZXgudHNcIilcbn0iXSwKICAibWFwcGluZ3MiOiAiOzs7QUFBQSxJQUFJLFVBQVUsVUFBVSxTQUFTLEtBQUssR0FBRztBQUNyQyxRQUFNLE9BQU8sbUJBQWdCO0FBQ2pDLFdBQVcsVUFBVSxVQUFVLFNBQVMsTUFBTSxHQUFHO0FBQzdDLFFBQU0sT0FBTyxpQkFBaUI7QUFDbEM7IiwKICAibmFtZXMiOiBbXQp9Cg==
+// debuno 0.1.24
+navigator.userAgent.includes("Bun")?await import("./bun-3K62QWV2.js"):navigator.userAgent.includes("Node")&&await import("./node/index.js");
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiLi4vaW5kZXgudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImlmIChuYXZpZ2F0b3IudXNlckFnZW50LmluY2x1ZGVzKFwiQnVuXCIpKSB7XG4gICAgYXdhaXQgaW1wb3J0KFwiLi9idW4vaW5kZXgudHNcIilcbn0gZWxzZSBpZiAobmF2aWdhdG9yLnVzZXJBZ2VudC5pbmNsdWRlcyhcIk5vZGVcIikpIHtcbiAgICBhd2FpdCBpbXBvcnQoXCIuL25vZGUvaW5kZXgudHNcIilcbn0iXSwKICAibWFwcGluZ3MiOiAiO0FBQUksVUFBVSxVQUFVLFNBQVMsS0FBSyxFQUNsQyxLQUFNLFFBQU8sbUJBQWdCLEVBQ3RCLFVBQVUsVUFBVSxTQUFTLE1BQU0sR0FDMUMsS0FBTSxRQUFPLGlCQUFpQiIsCiAgIm5hbWVzIjogW10KfQo=

@@ -1,7 +1,22 @@
 #!/bin/sh
-
 _BASE=$(dirname $(dirname $(realpath $0)))
+_BIN_DIR="$_BASE/bin"
+_CMD_DIR="$_BASE/scripts"
+ 
+for arg in "$@"
+do
+    case $arg in
+        deno|bun|node)
+            shift
+            exec "$_BIN_DIR/$arg" "$@"
+            break
+        ;;
+        *)
+            exec "$_CMD_DIR/cmd.sh" "$@"
+            break
+        ;;
+    esac
+done
 
-_RUN=$_BASE/scripts/run.sh
+exec "$_CMD_DIR/help.sh"
 
-exec $_RUN "$@"

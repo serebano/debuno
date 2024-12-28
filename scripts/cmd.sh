@@ -41,6 +41,12 @@ do
             _ARGS+=("$@")
             break
         ;;
+        uninstall)
+            _PATH="$_BASE/$_ARG.sh"
+            shift
+            _ARGS+=("$@")
+            break
+        ;;        
         upgrade)
             _PATH="$_BASE/$_ARG.sh"
             shift
@@ -54,7 +60,7 @@ do
             break
         ;;
         *)
-            echo "Usage: debuno [init|info|link|unlink|upgrade|reinstall]"
+            echo "Usage: debuno [init|info|link|unlink|dev|upgrade|reinstall|uninstall]"
             exit 1
         ;;
     esac

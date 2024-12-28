@@ -132,7 +132,11 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 				// throw new Error(JSON.stringify(args))
 				// console.log('~ resolve', args)
 				if (args.importer === 'bun:main' || args.importer === process.argv[1]) {
-					api.cacheSync(args.path)
+					if (args.importer === 'bun:main') {
+						api.cacheSync(args.path)
+					} else {
+						//
+					}
 				}
 
 				if (isNodeModulesResolution(args)) {
@@ -186,23 +190,25 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 
 					switch (resolved.kind) {
 						case "npm": {
-							let resolveDir: string;
-							if (nodeModulesDir !== null) {
-								resolveDir = nodeModulesDir;
-							} else {
-								resolveDir = api.loader.nodeModulesDirForPackage(resolved.packageId);
-								packageIdByNodeModules.set(resolveDir, resolved.packageId);
-							}
-							const path = `${resolved.packageName}${resolved.path ?? ""}`;
-							const resolvedPath = (Bun.resolveSync(path, resolveDir))
-							console.log("RR", { path, resolvedPath })
-							return undefined
-
+							// let resolveDir: string;
+							// if (nodeModulesDir !== null) {
+							// 	resolveDir = nodeModulesDir;
+							// } else {
+							// 	resolveDir = api.loader.nodeModulesDirForPackage(resolved.packageId);
+							// 	packageIdByNodeModules.set(resolveDir, resolved.packageId);
+							// }
+							// const path = `${resolved.packageName}${resolved.path ?? ""}`;
+							// const resolvedPath = (Bun.resolveSync(path, resolveDir))
+							// console.log("RR", { path, resolvedPath })
 							return {
-								path: resolvedPath,
-								namespace: 'file',
-								external: true
+								path: resolved.packageName
 							}
+
+							// return {
+							// 	path: resolvedPath,
+							// 	namespace: 'file',
+							// 	external: true
+							// }
 						}
 						case "esm": {
 							return urlToEsbuildResolution(resolved.specifier);
@@ -215,7 +221,7 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 						}
 					}
 				} catch (e: any) {
-					console.error(e.message)
+					console.error('x10', e.message)
 					return undefined
 				}
 			}
@@ -238,19 +244,24 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 				// 	}
 				// }
 
-				const specifier = esbuildResolutionToURL(args);
-				const result = await api.loader.loadEsm(specifier, generated);
+				try {
+					const specifier = esbuildResolutionToURL(args);
+					const result = await api.loader.loadEsm(specifier, generated);
 
-				// if (result?.loader === 'tsx' && args.namespace === 'files') {
-				// 	const contents = new TextDecoder().decode(result.contents as BufferSource)
-				// 	console.log('replaceImports', args.path)
-				// 	return {
-				// 		contents: replaceImports(contents),
-				// 		loader: 'tsx'
-				// 	}
-				// }
+					// if (result?.loader === 'tsx' && args.namespace === 'files') {
+					// 	const contents = new TextDecoder().decode(result.contents as BufferSource)
+					// 	console.log('replaceImports', args.path)
+					// 	return {
+					// 		contents: replaceImports(contents),
+					// 		loader: 'tsx'
+					// 	}
+					// }
 
-				return result || null
+					return result || null
+				} catch (e: any) {
+					console.error('x20', e.message)
+					return null
+				}
 			}
 
 			// resolve
@@ -264,7 +275,7 @@ export default function pluginImportResoltion({ generated }: { generated?: boole
 			// load
 			builder.onLoad({ filter: /.*/, namespace: 'http' }, load as any);
 			builder.onLoad({ filter: /.*/, namespace: 'https' }, load as any);
-			builder.onLoad({ filter: /.*/, namespace: 'npm' }, load as any);
+			// builder.onLoad({ filter: /.*/, namespace: 'npm' }, load as any);
 
 		},
 	}

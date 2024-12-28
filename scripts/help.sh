@@ -9,5 +9,5 @@ echo "  Run: "
 echo "  debuno [deno|bun|node] [...args]"
 echo
 echo "  Commands: "
-echo "  debuno [init|info|link|unlink|reinstall]"
+echo "  debuno [init|info|link|unlink|dev|upgrade|reinstall|uninstall]"
 echo

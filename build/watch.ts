@@ -20,9 +20,10 @@ const ctx = await esbuild.context({
 		"./node/register.ts",
 	],
 	bundle: true,
-	outdir: "../dist",
+	outdir: "./dist",
 	format: "esm",
 	sourcemap: "inline",
+	minify: true,
 	treeShaking: true,
 	splitting: true,
 	banner: {

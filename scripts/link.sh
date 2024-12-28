@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # local dev link for debuno
 _BASE=$(dirname $(dirname $(realpath $0)))
 

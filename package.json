@@ -1,6 +1,6 @@
 {
   "name": "debuno",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "type": "module",
   "repository": {
     "type": "git",
@@ -10,8 +10,9 @@
   "description": "Bring Deno module resolution to Bun & Node",
   "scripts": {
     "build": "./build/build.ts",
-    "dev:node": "node --import debuno --watch example/app.ts",
-    "dev:bun": "bun --preload debuno --watch example/app.ts",
+    "dev:node": "./bin/node --watch example/app.ts",
+    "dev:bun": "./bin/bun --watch example/app.ts",
+    "x": "dbn info",
     "prepare": "husky"
   },
   "bin": {
@@ -35,9 +36,7 @@
     "./package.json": "./package.json"
   },
   "engines": {
-    "deno": "2.1.4",
-    "bun": "1.1.40",
-    "node": "22.9.0"
+    "node": "v22"
   },
   "devDependencies": {
     "husky": "^9.1.7"

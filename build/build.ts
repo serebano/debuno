@@ -25,6 +25,7 @@ const ctx = await esbuild.context({
 	sourcemap: "inline",
 	treeShaking: true,
 	splitting: true,
+	minify: true,
 	banner: {
 		js: `// ${pkg.name} ${pkg.version}`,
 	},
