@@ -3,7 +3,7 @@ Bring Deno module resolution to Bun & Node
 
 ## Install
 ```sh
-curl -o- https://debuno.dev/install | sh
+curl -fsSL https://debuno.dev/install | sh
 ```
 
 ## Usage
