@@ -4,6 +4,8 @@ DEBUNO_DIR=$HOME/.debuno
 DEBUNO_EXE=$DEBUNO_DIR/bin/debuno
 DEBUNO_EXE_LINK=$HOME/.deno/bin/debuno
 
+INSTALL_DIR=""
+
 # Reset
 Color_Off=''
 
@@ -141,7 +143,9 @@ function install_deps() {
 }
 
 function install() {
-    if [ -L $DEBUNO_EXE_LINK ]; then
+    INSTALL_DIR=$DEBUNO_DIR
+
+    if [ "$(command -v debuno)" != "" ]; then
 
         debuno_installed_version=$(debuno_version)
         debuno_latest_version=$(debuno_latest_version)
@@ -152,7 +156,7 @@ function install() {
 
     else
 
-        echo "Installing debuno v$(info $(debuno_latest_version))..."
+        echo "Installing debuno $(green v$(debuno_latest_version))..."
         echo
 
         rm -rf $DEBUNO_DIR
@@ -168,12 +172,11 @@ function install() {
 function install_local() {
     LOCAL_DEBUNO_DIR=$(dirname $(realpath $0))
     LOCAL_DEBUNO_EXE=$LOCAL_DEBUNO_DIR/bin/debuno
+    INSTALL_DIR=$LOCAL_DEBUNO_DIR
 
     if [ -L $DEBUNO_EXE_LINK ]; then rm $DEBUNO_EXE_LINK; fi
 
     ln -s $LOCAL_DEBUNO_EXE $DEBUNO_EXE_LINK;
-
-    echo "Installed local debuno $(green v$(cat $LOCAL_DEBUNO_DIR/version))"
 }
 
 function uninstall() {
@@ -192,8 +195,6 @@ fi
 
 install_deps;
 
-echo;
-
 if [ "$(basename $0)" == "install" ]; then
     # ./install
     install_local;
@@ -203,10 +204,7 @@ else
     install;
 fi
 
-if command -v debuno >/dev/null; then
-	echo "Run 'debuno' to get started"
-else
-	echo "Run '$DEBUNO_EXE_LINK' to get started"
-fi
-
-echo;
+echo
+echo "Installed debuno $(green v$(debuno_version))"
+echo "$INSTALL_DIR"
+echo
