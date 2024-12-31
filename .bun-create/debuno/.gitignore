@@ -1,0 +1,5 @@
+node_modules
+deno.lock
+bun.lockb
+package.lock
+.DS_Store

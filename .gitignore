@@ -1,5 +1,4 @@
 node_modules
-.tmp
 deno.lock
 bun.lockb
 package.lock

@@ -1,17 +1,19 @@
 # debuno
+
 Bring Deno module resolution to Bun & Node
 
 ## Install
+
 ```sh
 curl -fsSL https://debuno.dev/install | sh
 ```
 
 ## Quick start
+
 ```sh
 debuno init foo
 cd foo
 ```
-
 
 ## Deno
 
