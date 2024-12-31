@@ -2,13 +2,13 @@
     "name": "create-debuno",
     "version": "0.0.1",
     "module": "index.ts",
-    "bun-create": {
-        "preinstall": "curl -o- https://debuno.dev/install | sh"
-    },
     "scripts": {
         "dev:deno": "debuno deno index.ts",
         "dev:bun": "debuno bun index.ts",
         "dev:node": "debuno node index.ts",
         "dev": "bun run dev:deno && bun run dev:bun && bun run dev:node"
+    },
+    "devDependencies": {
+        "debuno": "^0.1.27"
     }
 }

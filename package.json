@@ -1,6 +1,6 @@
 {
   "name": "debuno",
-  "version": "0.1.27",
+  "version": "0.1.29",
   "type": "module",
   "repository": {
     "type": "git",
@@ -36,8 +36,5 @@
   },
   "engines": {
     "node": "v22"
-  },
-  "devDependencies": {
-    "husky": "^9.1.7"
   }
 }

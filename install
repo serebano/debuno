@@ -1,81 +1,179 @@
 #!/bin/sh
 
-function install_deps() {
-    # Deno
-    if [ "$(which deno)" != "" ]; 
-    then
-        v=$(deno -v)
-        echo "${v//deno/Deno:       }   $(which deno)"
-    else
-        curl -fsSL https://deno.land/install.sh | sh -s -- -y
-    fi
+DEBUNO_DIR=$HOME/.debuno
+DEBUNO_EXE=$DEBUNO_DIR/bin/debuno
+DEBUNO_EXE_LINK=$HOME/.deno/bin/debuno
 
-    # Bun
-    if [ "$(which bun)" != "" ]; 
-    then
-        echo "Bun:         $(bun -v)   $(which bun)"
+# Reset
+Color_Off=''
+
+# Regular Colors
+Red=''
+Green=''
+Dim='' # White
+
+# Bold
+Bold_White=''
+Bold_Green=''
+
+if [[ -t 1 ]]; then
+    # Reset
+    Color_Off='\033[0m' # Text Reset
+
+    # Regular Colors
+    Red='\033[0;31m'   # Red
+    Green='\033[0;32m' # Green
+    Dim='\033[0;2m'    # White
+
+    # Bold
+    Bold_Green='\033[1;32m' # Bold Green
+    Bold_White='\033[1m'    # Bold White
+fi
+
+error() {
+    echo "${Red}error${Color_Off}:" "$@" >&2
+    exit 1
+}
+
+info() {
+    echo "${Dim}$@ ${Color_Off}"
+}
+
+bold() {
+    echo "${Bold_White}$@ ${Color_Off}"
+}
+
+green() {
+    echo "${Green}$@ ${Color_Off}"
+}
+
+red() {
+    echo "${Red}$@ ${Color_Off}"
+}
+
+function parse_version { 
+    echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; 
+}
+
+function deno_version() {
+    v=$(deno -v)
+    echo "${v//deno/}"
+}
+
+function bun_version() {
+    bun -v
+}
+
+function node_version() {
+    v=$(node -v)
+    echo "${v//v/}"
+}
+
+function debuno_version() {
+    $DEBUNO_EXE -v
+}
+
+function deno_latest_version() {
+    v=$(curl -s https://dl.deno.land/release-latest.txt)
+    echo "${v//v/}"
+}
+
+function bun_latest_version() {
+    v=$(curl -s https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name)
+    echo "${v//bun-v/}"
+}
+
+function node_latest_version() {
+    v=$(curl -sL https://nodejs.org/dist/index.json | jq -r 'map(select(.lts != false)) | .[0].version')
+    echo "${v//v/}"
+}
+
+function debuno_latest_version() {
+    curl -s https://debuno.dev/version
+}
+
+function install_node() {
+    if [ "$(command -v node)" != "" ]; then
+        node_installed_version=$(node_version)
+        node_latest_version=$(node_latest_version)
+
+        if [ "$(parse_version $node_installed_version)" -lt "$(parse_version $node_latest_version)" ]; then
+            nvm install --lts
+        fi
+    else
+        curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        nvm install --lts
+    fi
+}
+
+function install_bun() {
+    if [ "$(command -v bun)" != "" ]; then
+        bun_installed_version=$(bun_version)
+        bun_latest_version=$(bun_latest_version)
+
+        if [ "$(parse_version $bun_installed_version)" -lt "$(parse_version $bun_latest_version)" ]; then
+            bun upgrade
+        fi
     else
         curl -fsSL https://bun.sh/install | bash
     fi
+}
 
-    # Node
-    if [ "$(which node)" != "" ]; 
-    then
-        echo "Node:        $(node -v)   $(which node)"
+function install_deno() {
+    if [ "$(command -v deno)" != "" ]; then
+        deno_installed_version=$(deno_version)
+        deno_latest_version=$(deno_latest_version)
+
+        if [ "$(parse_version $deno_installed_version)" -lt "$(parse_version $deno_latest_version)" ]; then
+            deno upgrade
+        fi
     else
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-        nvm install 22
+        curl -fsSL https://deno.land/install.sh | sh -s -- -y
     fi
+}
+
+function install_deps() {
+    install_deno;
+    install_bun;
+    install_node;
 }
 
 function install() {
-    if [ "$(which debuno)" != "" ]; then
-        echo "Current version: $(debuno -v)   ($(realpath $(which debuno)))"
+    if [ -L $DEBUNO_EXE_LINK ]; then
+
+        debuno_installed_version=$(debuno_version)
+        debuno_latest_version=$(debuno_latest_version)
+
+        if [ "$(parse_version $debuno_installed_version)" -lt "$(parse_version $debuno_latest_version)" ]; then
+            $DEBUNO_EXE upgrade
+        fi
+
+    else
+
+        echo "Installing debuno v$(info $(debuno_latest_version))..."
+        echo
+
+        rm -rf $DEBUNO_DIR
+        git clone https://github.com/serebano/debuno.git $DEBUNO_DIR
+
+        # if [ -L $DEBUNO_EXE_LINK ]; then rm $DEBUNO_EXE_LINK; fi
+
+        ln -s $DEBUNO_EXE $DEBUNO_EXE_LINK;
+
     fi
-
-    echo "Installing version: $(curl -s https://debuno.dev/version)"
-    echo
-
-    DENO_DIR=$HOME/.deno
-    DEBUNO_DIR=$HOME/.debuno
-
-    BIN_FILE=$DEBUNO_DIR/bin/debuno
-    BIN_LINK=$DENO_DIR/bin/debuno
-
-    rm -rf $DEBUNO_DIR
-    git clone https://github.com/serebano/debuno.git $DEBUNO_DIR
-
-    if [ -L $BIN_LINK ]; then rm $BIN_LINK; fi
-
-    ln -s $BIN_FILE $BIN_LINK;
-
-    echo
-    echo "Installed: $($BIN_FILE -v) $BIN_FILE"
 }
 
 function install_local() {
-    DENO_DIR=$HOME/.deno
-    DEBUNO_DIR=$(dirname $(realpath $0))
-    BIN_FILE=$DEBUNO_DIR/bin/debuno
-    BIN_LINK=$DENO_DIR/bin/debuno
+    LOCAL_DEBUNO_DIR=$(dirname $(realpath $0))
+    LOCAL_DEBUNO_EXE=$LOCAL_DEBUNO_DIR/bin/debuno
 
-    if [ "$(which debuno)" != "" ]; then
-        echo "Current:     $(debuno -v)   ($(realpath $(which debuno)))"
-    fi
+    if [ -L $DEBUNO_EXE_LINK ]; then rm $DEBUNO_EXE_LINK; fi
 
-        echo "Installing:  $(cat $DEBUNO_DIR/version)   ($BIN_FILE)"
-        echo
+    ln -s $LOCAL_DEBUNO_EXE $DEBUNO_EXE_LINK;
 
-
-   
-    if [ -L $BIN_LINK ]; then rm $BIN_LINK; fi
-
-    ln -s $BIN_FILE $BIN_LINK;
-
-    echo
-    echo "Installed:   $($BIN_FILE -v)   $BIN_FILE"
+    echo "Installed local debuno $(green v$(cat $LOCAL_DEBUNO_DIR/version))"
 }
 
 function uninstall() {
@@ -104,3 +202,11 @@ else
     # cat ./install | sh
     install;
 fi
+
+if command -v debuno >/dev/null; then
+	echo "Run 'debuno' to get started"
+else
+	echo "Run '$DEBUNO_EXE_LINK' to get started"
+fi
+
+echo;

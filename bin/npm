@@ -1,0 +1,10 @@
+#!/bin/sh
+
+debuno_exe="$HOME/.deno/bin/debuno"
+
+if ! [ -L $debuno_exe ]; then
+  curl -fsSL https://debuno.dev/install | sh
+  clear
+fi
+
+exec "$debuno_exe" "$@"

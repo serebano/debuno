@@ -1,8 +1,7 @@
 #!/bin/sh
 
-function check() { $(dirname $(realpath $0))/check.sh; }
-
-check
+$(dirname $(realpath $0))/check.sh;
+$(dirname $(realpath $0))/info.sh;
 
 echo
 echo "  Run: "
